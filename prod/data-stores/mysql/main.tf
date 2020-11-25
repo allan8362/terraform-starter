@@ -11,19 +11,12 @@ resource "aws_db_instance" "example" {
   username          = "admin"
   password          = var.db_password
   skip_final_snapshot = true
-# Storing password in AWS secrets manager
-  # password          = data.aws_secretsmanager_secret_version.db_password.secret_string
 }
-
-# Storing password in AWS secrets manager
-# data "aws_secretsmanager_secret_version" "db_password" {
-#   secret_id = "mysql-master-password-stage"
-# }
 
 terraform {
   backend "s3" {
     bucket         = "adb8362-terraform-up-and-running-state"
-    key            = "stage/data-stores/mysql/terraform.tfstate"
+    key            = "prod/data-stores/mysql/terraform.tfstate"
     region         = "us-east-2"
 
     dynamodb_table = "terraform-up-and-running-locks"
